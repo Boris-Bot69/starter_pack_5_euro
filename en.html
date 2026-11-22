@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>UniStarter – Your Starter Pack for Erlangen &amp; Nürnberg</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  *{font-family:'Inter',sans-serif;}
+  .gradient-text{background:linear-gradient(135deg,#6366f1,#8b5cf6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .gradient-btn{background:linear-gradient(135deg,#6366f1,#8b5cf6);transition:all .2s ease;}
+  .gradient-btn:hover{background:linear-gradient(135deg,#4f46e5,#7c3aed);transform:translateY(-1px);box-shadow:0 8px 25px rgba(99,102,241,.4);}
+  .gradient-btn:disabled{opacity:.45;transform:none;box-shadow:none;cursor:not-allowed;}
+  .hero-glow{background:radial-gradient(ellipse at 50% -10%,rgba(99,102,241,.22) 0%,transparent 65%);}
+  .item-card{transition:all .2s ease;cursor:pointer;border:1.5px solid rgba(100,116,139,.25);}
+  .item-card:hover{border-color:rgba(99,102,241,.55);background:rgba(99,102,241,.06);}
+  .item-card.selected{border-color:rgba(99,102,241,.85);background:rgba(99,102,241,.12);box-shadow:0 0 18px rgba(99,102,241,.18);}
+  .receipt{position:sticky;top:84px;max-height:calc(100vh - 96px);overflow-y:auto;}
+  .modal-bg{backdrop-filter:blur(10px);background:rgba(2,6,23,.88);}
+  input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px rgba(99,102,241,.55);}
+  .feed-in{animation:feedSlide .45s ease;}
+  @keyframes feedSlide{from{opacity:0;transform:translateY(-12px);}to{opacity:1;transform:translateY(0);}}
+  .bounce-in{animation:bounceIn .5s cubic-bezier(.68,-.55,.265,1.55);}
+  @keyframes bounceIn{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
+  .check-ring{stroke-dasharray:120;stroke-dashoffset:120;animation:drawCheck .6s .3s ease forwards;}
+  @keyframes drawCheck{to{stroke-dashoffset:0;}}
+  ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:#0f172a;}::-webkit-scrollbar-thumb{background:#4338ca;border-radius:3px;}
+  .mobile-bar-enter{transform:translateY(0)!important;}
+  #mobile-bar{transform:translateY(100%);transition:transform .3s ease;}
+  .nav-link{position:relative;}
+  .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:linear-gradient(90deg,#6366f1,#8b5cf6);transition:width .2s;}
+  .nav-link:hover::after{width:100%;}
+  .cat-card{border:1px solid rgba(100,116,139,.2);}
+  .coupon-success{animation:slideDown .3s ease;}
+  @keyframes slideDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen">
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav class="fixed top-0 w-full z-40 bg-slate-900/85 backdrop-blur-md border-b border-slate-800/80">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-lg gradient-btn flex items-center justify-center flex-shrink-0">
+        <i data-lucide="zap" class="w-4 h-4 text-white"></i>
+      </div>
+      <span class="font-black text-lg gradient-text tracking-tight">UniStarter</span>
+    </div>
+    <div class="hidden md:flex items-center gap-7 text-sm text-slate-400">
+      <a href="#configurator" class="nav-link hover:text-slate-200 transition-colors">Configurator</a>
+      <a href="#how" class="nav-link hover:text-slate-200 transition-colors">How it works</a>
+      <a href="#feed" class="nav-link hover:text-slate-200 transition-colors">Orders</a>
+    </div>
+    <div class="flex items-center gap-3 flex-shrink-0">
+      <a href="index.html" class="text-xs text-slate-500 hover:text-slate-300 border border-slate-700 hover:border-slate-500 px-2.5 py-1.5 rounded-lg transition-colors font-medium">🇩🇪 DE</a>
+      <a href="#configurator" class="gradient-btn text-white text-sm font-semibold px-4 py-2 rounded-xl flex items-center gap-1.5">
+        <i data-lucide="package" class="w-4 h-4"></i><span class="hidden sm:inline">Build your pack</span><span class="sm:hidden">Start</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero-glow min-h-screen flex items-center justify-center pt-24 pb-20 px-4 text-center">
+  <div class="max-w-4xl mx-auto">
+    <div class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/25 rounded-full px-4 py-1.5 text-sm text-indigo-400 mb-8">
+      <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+      FAU Erlangen-Nürnberg · TH Nürnberg · Study Abroad &amp; Exchange
+    </div>
+    <h1 class="text-5xl sm:text-6xl md:text-7xl font-black mb-5 leading-[1.08] tracking-tight">
+      Your <span class="gradient-text">stress-free</span><br/>start in Germany
+    </h1>
+    <p class="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-3 leading-relaxed">
+      Build your personal starter pack for student accommodation —
+      <strong class="text-slate-200">tailored, affordable, ready to deliver.</strong>
+    </p>
+    <p class="text-sm text-slate-500 mb-10">No supermarket stress after arrival. Everything you need, in one package.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+      <a href="#configurator" class="gradient-btn text-white font-bold px-8 py-4 rounded-2xl flex items-center justify-center gap-2 text-base shadow-xl">
+        <i data-lucide="settings-2" class="w-5 h-5"></i>Build your pack now
+      </a>
+      <a href="#how" class="border border-slate-700 hover:border-indigo-500/50 hover:bg-indigo-500/5 text-slate-300 font-semibold px-8 py-4 rounded-2xl flex items-center justify-center gap-2 text-base transition-all">
+        <i data-lucide="play-circle" class="w-5 h-5 text-indigo-400"></i>How it works
+      </a>
+    </div>
+    <div class="grid grid-cols-3 sm:grid-cols-3 gap-6 max-w-sm mx-auto text-center">
+      <div><div class="text-3xl sm:text-4xl font-black gradient-text">16+</div><div class="text-xs text-slate-500 mt-1">items to choose</div></div>
+      <div><div class="text-3xl sm:text-4xl font-black gradient-text">5%</div><div class="text-xs text-slate-500 mt-1">student discount</div></div>
+      <div><div class="text-3xl sm:text-4xl font-black gradient-text">0€</div><div class="text-xs text-slate-500 mt-1">shipping cost</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ HOW IT WORKS ═══════════════════ -->
+<section id="how" class="py-24 px-4 bg-slate-800/25 border-y border-slate-800/60">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl sm:text-4xl font-black mb-3">Your Starter Pack in <span class="gradient-text">3 Steps</span></h2>
+      <p class="text-slate-400">Simple, transparent, fast.</p>
+    </div>
+    <div class="grid sm:grid-cols-3 gap-6">
+      <div class="bg-slate-800 border border-slate-700/60 rounded-2xl p-6 text-center">
+        <div class="w-12 h-12 gradient-btn rounded-xl flex items-center justify-center mx-auto mb-4">
+          <i data-lucide="settings-2" class="w-6 h-6 text-white"></i>
+        </div>
+        <div class="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-2">Step 1</div>
+        <h3 class="font-bold text-lg mb-2">Configure your pack</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">Choose exactly the items you need — from bedding to kitchen essentials.</p>
+      </div>
+      <div class="bg-slate-800 border border-slate-700/60 rounded-2xl p-6 text-center">
+        <div class="w-12 h-12 gradient-btn rounded-xl flex items-center justify-center mx-auto mb-4">
+          <i data-lucide="tag" class="w-6 h-6 text-white"></i>
+        </div>
+        <div class="text-xs font-bold text-violet-400 uppercase tracking-widest mb-2">Step 2</div>
+        <h3 class="font-bold text-lg mb-2">Save with code STARTER5</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">Enter your exclusive student code and instantly get 5% off your pack.</p>
+      </div>
+      <div class="bg-slate-800 border border-slate-700/60 rounded-2xl p-6 text-center">
+        <div class="w-12 h-12 gradient-btn rounded-xl flex items-center justify-center mx-auto mb-4">
+          <i data-lucide="truck" class="w-6 h-6 text-white"></i>
+        </div>
+        <div class="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-2">Step 3</div>
+        <h3 class="font-bold text-lg mb-2">Order &amp; relax</h3>
+        <p class="text-slate-400 text-sm leading-relaxed">We take care of delivery. You just need to arrive.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CONFIGURATOR ═══════════════════ -->
+<section id="configurator" class="py-20 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl sm:text-4xl font-black mb-3">Your <span class="gradient-text">Personal Configurator</span></h2>
+      <p class="text-slate-400 max-w-xl mx-auto">Choose exactly what you really need. Live price calculation included.</p>
+    </div>
+    <div class="flex flex-col lg:flex-row gap-6 items-start">
+      <!-- LEFT: CATEGORIES -->
+      <div class="flex-1 space-y-5" id="catalog-container">
+        <!-- Injected by JS -->
+      </div>
+      <!-- RIGHT: STICKY RECEIPT -->
+      <div class="w-full lg:w-80 xl:w-88 flex-shrink-0">
+        <div class="receipt bg-slate-800 border border-slate-700/80 rounded-2xl overflow-hidden">
+          <div class="p-5 border-b border-slate-700/60 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i data-lucide="shopping-cart" class="w-5 h-5 text-indigo-400"></i>
+              <span class="font-bold">Your Pack</span>
+            </div>
+            <span id="cart-count-badge" class="hidden gradient-btn text-white text-xs font-bold px-2 py-0.5 rounded-full min-w-[1.4rem] text-center">0</span>
+          </div>
+          <!-- EMPTY STATE -->
+          <div id="cart-empty" class="p-8 text-center">
+            <div class="w-14 h-14 bg-slate-700/50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <i data-lucide="package-open" class="w-7 h-7 text-slate-500"></i>
+            </div>
+            <p class="text-slate-500 text-sm">Select items from the configurator to build your pack.</p>
+          </div>
+          <!-- FILLED STATE -->
+          <div id="cart-filled" class="hidden">
+            <div class="p-4 max-h-56 overflow-y-auto" id="cart-items-list"></div>
+            <div class="border-t border-slate-700/60 p-4 space-y-3">
+              <!-- Subtotal -->
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-400">Subtotal</span>
+                <span class="text-slate-200 font-semibold" id="cart-subtotal">0.00 €</span>
+              </div>
+              <!-- Discount row -->
+              <div id="cart-discount-row" class="hidden flex justify-between text-sm coupon-success">
+                <span class="text-green-400 flex items-center gap-1"><i data-lucide="tag" class="w-3 h-3"></i>STARTER5 (−5%)</span>
+                <span class="text-green-400 font-semibold" id="cart-discount">−0.00 €</span>
+              </div>
+              <!-- Total -->
+              <div class="flex justify-between items-center border-t border-slate-700/60 pt-3">
+                <span class="font-bold text-slate-200">Total</span>
+                <span class="text-2xl font-black gradient-text" id="cart-total">0.00 €</span>
+              </div>
+              <!-- Coupon -->
+              <div>
+                <div class="flex gap-2 mt-1">
+                  <input id="coupon-input" type="text" placeholder="Voucher code (e.g. STARTER5)" maxlength="10" class="flex-1 bg-slate-700 border border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-200 placeholder-slate-500 uppercase tracking-widest"/>
+                  <button onclick="applyCoupon()" class="bg-slate-700 hover:bg-slate-600 border border-slate-600 text-slate-300 text-sm font-semibold px-3 py-2 rounded-xl transition-colors whitespace-nowrap">Apply</button>
+                </div>
+                <p id="coupon-msg" class="text-xs mt-1.5 hidden"></p>
+              </div>
+              <!-- CTA -->
+              <button id="btn-checkout" onclick="openCheckout()" disabled class="gradient-btn w-full text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 mt-1 text-sm">
+                <i data-lucide="credit-card" class="w-4 h-4"></i>Order now
+              </button>
+              <p class="text-xs text-slate-600 text-center">Free delivery · GDPR compliant</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ LIVE FEED ═══════════════════ -->
+<section id="feed" class="py-20 px-4 bg-slate-800/25 border-y border-slate-800/60">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/25 rounded-full px-4 py-1.5 text-sm text-green-400 mb-5">
+        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>Live Orders
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-black mb-3">What other students have <span class="gradient-text">just ordered</span></h2>
+      <p class="text-slate-400">Real orders from our community.</p>
+    </div>
+    <div id="order-feed" class="space-y-3">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ LEGAL ═══════════════════ -->
+<section id="legal" class="py-16 px-4">
+  <div class="max-w-5xl mx-auto grid sm:grid-cols-2 gap-5">
+    <div class="bg-slate-800 border border-slate-700/60 rounded-2xl p-6">
+      <div class="flex items-center gap-2 mb-4">
+        <i data-lucide="shield-check" class="w-5 h-5 text-green-400"></i>
+        <h3 class="font-bold text-green-400">GDPR &amp; Data Protection</h3>
+      </div>
+      <p class="text-slate-400 text-sm leading-relaxed">UniStarter stores all entered data exclusively in the <strong class="text-slate-300">local browser storage (localStorage)</strong> of this device. <strong class="text-slate-300">No data is transmitted to external servers.</strong> This MVP is a purely offline tool for market validation as part of the €5 Business Competition. No cookies are set and no third-party tracking services are used.</p>
+    </div>
+    <div class="bg-slate-800 border border-slate-700/60 rounded-2xl p-6">
+      <div class="flex items-center gap-2 mb-4">
+        <i data-lucide="file-text" class="w-5 h-5 text-indigo-400"></i>
+        <h3 class="font-bold text-indigo-400">Legal Notice &amp; Liability</h3>
+      </div>
+      <p class="text-slate-400 text-sm leading-relaxed mb-3"><strong class="text-slate-300">UniStarter</strong> is a student startup project (€5 Business Competition), operated by students of FAU/TH Erlangen-Nürnberg.</p>
+      <p class="text-slate-400 text-sm leading-relaxed"><strong class="text-slate-300">Disclaimer:</strong> UniStarter acts exclusively as an <strong class="text-slate-300">intermediary/broker</strong>. Purchase contracts are concluded directly between buyer and supplier. UniStarter accepts no liability for products, prices or delivery.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer class="py-10 px-4 border-t border-slate-800 text-center">
+  <div class="flex items-center justify-center gap-2 mb-3">
+    <div class="w-7 h-7 rounded-lg gradient-btn flex items-center justify-center">
+      <i data-lucide="zap" class="w-3.5 h-3.5 text-white"></i>
+    </div>
+    <span class="font-black gradient-text">UniStarter</span>
+  </div>
+  <p class="text-slate-600 text-sm mb-1">© 2026 UniStarter · Student Project · Erlangen &amp; Nürnberg</p>
+  <p class="text-slate-700 text-xs">Built with €5 seed capital, lots of creativity and even more coffee.</p>
+  <div class="flex justify-center gap-4 mt-4 text-xs text-slate-700">
+    <a href="#legal" class="hover:text-slate-500 transition-colors">Privacy</a>
+    <span>·</span>
+    <a href="#legal" class="hover:text-slate-500 transition-colors">Legal</a>
+    <span>·</span>
+    <a href="#configurator" class="hover:text-slate-500 transition-colors">Configurator</a>
+    <span>·</span>
+    <a href="index.html" class="hover:text-slate-500 transition-colors">🇩🇪 Deutsch</a>
+  </div>
+</footer>
+
+<!-- ═══════════════════ MOBILE STICKY BAR ═══════════════════ -->
+<div id="mobile-bar" class="lg:hidden fixed bottom-0 left-0 right-0 z-30 p-3 border-t border-slate-700 bg-slate-900/95 backdrop-blur-md">
+  <div class="flex items-center justify-between gap-3 max-w-sm mx-auto">
+    <div>
+      <div class="flex items-center gap-1.5">
+        <span class="text-xs text-slate-500">Pack total</span>
+        <span id="mobile-bar-count-badge" class="gradient-btn text-white text-xs font-bold px-1.5 py-0.5 rounded-full">0</span>
+      </div>
+      <div class="text-xl font-black gradient-text" id="mobile-bar-total">0.00 €</div>
+    </div>
+    <button onclick="openCheckout()" id="mobile-btn-checkout" disabled class="gradient-btn text-white font-bold px-6 py-3 rounded-xl flex items-center gap-2 text-sm">
+      <i data-lucide="credit-card" class="w-4 h-4"></i>Order
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════ CHECKOUT MODAL ═══════════════════ -->
+<div id="checkout-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-bg p-4" onclick="handleModalClick(event,'checkout-modal')">
+  <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+    <div class="p-6 border-b border-slate-700/60 flex items-center justify-between">
+      <h3 class="text-xl font-bold flex items-center gap-2"><i data-lucide="credit-card" class="w-5 h-5 text-indigo-400"></i>Complete your order</h3>
+      <button onclick="closeModal('checkout-modal')" class="text-slate-500 hover:text-white transition-colors p-1 rounded-lg hover:bg-slate-700">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <div class="p-6 space-y-5">
+      <!-- Order Summary -->
+      <div class="bg-slate-700/40 border border-slate-700/60 rounded-xl p-4">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Your selection</div>
+        <div id="checkout-summary" class="space-y-2 mb-3"></div>
+        <div class="border-t border-slate-700/60 pt-3 flex justify-between items-center">
+          <span class="font-bold text-slate-200">Total</span>
+          <span class="text-xl font-black gradient-text" id="checkout-total-display">0.00 €</span>
+        </div>
+      </div>
+      <!-- Form -->
+      <form id="checkout-form" onsubmit="submitOrder(event)" class="space-y-4">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Name <span class="text-red-400">*</span></label>
+            <input id="form-name" type="text" required placeholder="Your full name" class="w-full bg-slate-700 border border-slate-600 rounded-xl px-3.5 py-2.5 text-sm text-slate-200 placeholder-slate-500"/>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">E-Mail <span class="text-red-400">*</span></label>
+            <input id="form-email" type="email" required class="w-full bg-slate-700 border border-slate-600 rounded-xl px-3.5 py-2.5 text-sm text-slate-200 placeholder-slate-500"/>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Student type <span class="text-red-400">*</span></label>
+            <select id="form-type" required class="w-full bg-slate-700 border border-slate-600 rounded-xl px-3.5 py-2.5 text-sm text-slate-200">
+              <option value="">Please select…</option>
+              <option value="Erasmus">Erasmus</option>
+              <option value="Bachelor">Bachelor</option>
+              <option value="Master">Master</option>
+              <option value="PhD">PhD / Doctoral</option>
+              <option value="Exchange">Exchange</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Arrival date <span class="text-red-400">*</span></label>
+            <input id="form-arrival" type="date" required class="w-full bg-slate-700 border border-slate-600 rounded-xl px-3.5 py-2.5 text-sm text-slate-200"/>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Delivery address / Student dorm <span class="text-slate-600">(optional)</span></label>
+          <textarea id="form-address" rows="2" placeholder="e.g. Studentenwohnheim Fuchsenwiese, Room 214, 91054 Erlangen" class="w-full bg-slate-700 border border-slate-600 rounded-xl px-3.5 py-2.5 text-sm text-slate-200 placeholder-slate-500 resize-none"></textarea>
+        </div>
+        <div class="bg-slate-700/30 rounded-xl p-3 text-xs text-slate-500 flex gap-2">
+          <i data-lucide="shield" class="w-3.5 h-3.5 text-green-400 flex-shrink-0 mt-0.5"></i>
+          Your data is stored exclusively locally on this device (no external server).
+        </div>
+        <button type="submit" class="gradient-btn w-full text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 text-base">
+          <i data-lucide="check-circle" class="w-5 h-5"></i>Submit order now
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ SUCCESS MODAL ═══════════════════ -->
+<div id="success-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-bg p-4">
+  <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-md shadow-2xl text-center p-8 bounce-in" onclick="event.stopPropagation()">
+    <div class="w-20 h-20 mx-auto mb-5 relative">
+      <svg viewBox="0 0 80 80" class="w-20 h-20">
+        <circle cx="40" cy="40" r="36" fill="rgba(99,102,241,0.15)" stroke="rgba(99,102,241,0.4)" stroke-width="2"/>
+        <path d="M24 40 l12 12 l20-24" fill="none" stroke="#6366f1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="check-ring"/>
+      </svg>
+    </div>
+    <h3 class="text-2xl font-black mb-2">Order successful!</h3>
+    <p class="text-slate-400 text-sm mb-5">We'll be in touch by email shortly to coordinate the delivery with you.</p>
+    <div class="bg-slate-700/50 border border-slate-700 rounded-xl p-4 mb-5 text-left space-y-2">
+      <div class="flex justify-between text-sm">
+        <span class="text-slate-400">Order number</span>
+        <span class="font-mono font-bold text-indigo-400" id="success-order-id"></span>
+      </div>
+      <div class="flex justify-between text-sm">
+        <span class="text-slate-400">Name</span>
+        <span class="text-slate-200 font-semibold" id="success-name"></span>
+      </div>
+      <div class="flex justify-between text-sm border-t border-slate-700/60 pt-2">
+        <span class="font-bold text-slate-200">Paid</span>
+        <span class="font-black gradient-text" id="success-total"></span>
+      </div>
+    </div>
+    <div id="success-items" class="text-xs text-slate-500 mb-6 text-left space-y-1"></div>
+    <button onclick="closeModal('success-modal')" class="gradient-btn w-full text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2">
+      <i data-lucide="arrow-right" class="w-4 h-4"></i>Back to start
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════ JAVASCRIPT ═══════════════════ -->
+<script>
+// ════════════════════════════════════
+//  CATALOG DATA
+// ════════════════════════════════════
+const CATALOG = [
+  {
+    id: 'bedding', category: 'Bedding & Comfort', sub: 'Sleeping & Comfort',
+    icon: 'bed', color: '#6366f1', colorRgb: '99,102,241',
+    items: [
+      { id: 'sheets',  name: 'Bed sheets (single)',  de: 'Bettwäsche-Set',  price: 8.00, icon: 'layers'   },
+      { id: 'pillow',  name: 'Pillow',               de: 'Kopfkissen',      price: 4.50, icon: 'moon'     },
+      { id: 'blanket', name: 'Blanket / Duvet',      de: 'Bettdecke',       price:10.00, icon: 'cloud'    },
+      { id: 'towel',   name: 'Towels (2×)',           de: 'Handtuch-Set',   price: 3.00, icon: 'droplets' },
+    ]
+  },
+  {
+    id: 'kitchen', category: 'Kitchen Starter Set', sub: 'Kitchen & Cooking',
+    icon: 'utensils', color: '#f59e0b', colorRgb: '245,158,11',
+    items: [
+      { id: 'plate',   name: 'Plate & deep bowl',      de: 'Teller & Schüssel', price: 3.50, icon: 'circle'       },
+      { id: 'cutlery', name: 'Fork, knife & spoon',    de: 'Besteck-Set',       price: 2.50, icon: 'utensils'     },
+      { id: 'pot',     name: 'Cooking pot (2 L)',       de: 'Kochtopf',           price: 7.00, icon: 'flame'        },
+      { id: 'pan',     name: 'Frying pan (24 cm)',      de: 'Bratpfanne',         price: 6.00, icon: 'disc-3'       },
+      { id: 'bottle',  name: 'Reusable water bottle',  de: 'Wasserflasche',      price: 2.00, icon: 'droplet'      },
+    ]
+  },
+  {
+    id: 'hygiene', category: 'Hygiene & Essentials', sub: 'Bathroom & Hygiene',
+    icon: 'sparkles', color: '#10b981', colorRgb: '16,185,129',
+    items: [
+      { id: 'hygiene_kit', name: 'Toothbrush, paste, soap & toilet paper', de: 'Hygiene-Set',      price: 4.00, icon: 'smile'    },
+      { id: 'laundry',     name: 'Laundry detergent (500 ml)',              de: 'Waschmittel',      price: 2.50, icon: 'wind'     },
+      { id: 'cleaning',    name: 'All-purpose cleaning spray',              de: 'Reinigungsmittel', price: 3.00, icon: 'sparkles' },
+    ]
+  },
+  {
+    id: 'electronics', category: 'Electronics & Helpers', sub: 'Tech & Everyday Helpers',
+    icon: 'zap', color: '#8b5cf6', colorRgb: '139,92,246',
+    items: [
+      { id: 'adapter',  name: 'Universal EU power adapter (essential!)', de: 'EU-Steckdosenadapter',   price: 4.00, icon: 'plug'         },
+      { id: 'bag',      name: 'Reusable shopping bag',                   de: 'Einkaufstasche',          price: 1.00, icon: 'shopping-bag' },
+      { id: 'transit',  name: 'VGN & ÖPNV Erlangen/Nürnberg PDF',       de: 'Nahverkehr-Guide',        price: 0,    icon: 'map',    free: true },
+      { id: 'vouchers', name: 'Local discount vouchers (digital)',        de: 'Lokale Studi-Gutscheine', price: 0,    icon: 'ticket', free: true },
+    ]
+  }
+];
+
+const ALL_ITEMS = CATALOG.flatMap(c => c.items);
+
+// ════════════════════════════════════
+//  DEMO FEED DATA
+// ════════════════════════════════════
+const DEMO_FEED = [
+  { initials: 'SM', name: 'Sarah M.', type: 'Erasmus',  origin: '🇪🇸 Spain',    desc: 'Bed sheets & EU power adapter',                    ago: '12 minutes ago', color: '#6366f1' },
+  { initials: 'AK', name: 'Arjun K.', type: 'Master',   origin: '🇮🇳 India',    desc: 'Blanket + Cooking pot + Hygiene kit + Adapter',    ago: '1 hour ago',     color: '#8b5cf6' },
+  { initials: 'YT', name: 'Yuki T.',  type: 'Exchange', origin: '🇯🇵 Japan',    desc: 'Kitchen Starter Set (5 items) & Transit guide',    ago: '2 hours ago',    color: '#10b981' },
+  { initials: 'LF', name: 'Lucas F.', type: 'PhD',      origin: '🇧🇷 Brazil',   desc: 'Full Pack: Bedding + Kitchen + Hygiene + Adapter', ago: '4 hours ago',    color: '#f59e0b' },
+  { initials: 'PR', name: 'Priya R.', type: 'Bachelor', origin: '🇮🇳 India',    desc: 'Blanket, Fork/knife/spoon & Local vouchers',       ago: '6 hours ago',    color: '#06b6d4' },
+];
+
+// ════════════════════════════════════
+//  STATE
+// ════════════════════════════════════
+let cart    = {};
+let coupon  = { applied: false, code: '', pct: 5 };
+let orders  = JSON.parse(localStorage.getItem('us_orders_v3') || '[]');
+
+// ════════════════════════════════════
+//  CART HELPERS
+// ════════════════════════════════════
+function getSelected() { return ALL_ITEMS.filter(i => cart[i.id]); }
+function getSubtotal()  { return getSelected().reduce((s, i) => s + i.price, 0); }
+function getDiscount()  {
+  if (!coupon.applied) return 0;
+  return Math.round(getSubtotal() * (coupon.pct / 100) * 100) / 100;
+}
+function getTotal()     { return Math.round((getSubtotal() - getDiscount()) * 100) / 100; }
+function fmt(n)         { return n.toFixed(2) + ' €'; }
+
+// ════════════════════════════════════
+//  TOGGLE ITEM
+// ════════════════════════════════════
+function toggleItem(id) {
+  cart[id] = !cart[id];
+  updateItemCard(id);
+  renderSidebar();
+  renderMobileBar();
+}
+
+function toggleCategory(catId) {
+  const cat = CATALOG.find(c => c.id === catId);
+  const allSel = cat.items.every(i => cart[i.id]);
+  cat.items.forEach(i => { cart[i.id] = !allSel; });
+  cat.items.forEach(i => updateItemCard(i.id));
+  renderSidebar();
+  renderMobileBar();
+  const btn = document.getElementById('sel-all-' + catId);
+  if (btn) btn.textContent = allSel ? 'Select all' : 'Deselect all';
+}
+
+function updateItemCard(id) {
+  const card = document.getElementById('item-' + id);
+  if (!card) return;
+  const sel = !!cart[id];
+  if (sel) card.classList.add('selected'); else card.classList.remove('selected');
+  const chk = card.querySelector('.item-chk');
+  if (chk) { chk.style.opacity = sel ? '1' : '0'; chk.style.transform = sel ? 'scale(1)' : 'scale(0.6)'; }
+}
+
+// ════════════════════════════════════
+//  SIDEBAR / RECEIPT RENDER
+// ════════════════════════════════════
+function renderSidebar() {
+  const sel = getSelected();
+  const subtotal = getSubtotal();
+  const discount = getDiscount();
+  const total = getTotal();
+  const count = sel.length;
+
+  const badge = document.getElementById('cart-count-badge');
+  badge.textContent = count;
+  badge.classList.toggle('hidden', count === 0);
+
+  document.getElementById('cart-empty').style.display = count === 0 ? 'block' : 'none';
+  document.getElementById('cart-filled').style.display = count === 0 ? 'none' : 'block';
+
+  ['btn-checkout', 'mobile-btn-checkout'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.disabled = count === 0;
+  });
+
+  if (count === 0) return;
+
+  document.getElementById('cart-items-list').innerHTML = sel.map(item => `
+    <div class="flex items-center justify-between py-2 border-b border-slate-700/40 group">
+      <div class="flex items-center gap-2 min-w-0">
+        <button onclick="toggleItem('${item.id}')" class="text-slate-600 hover:text-red-400 transition-colors flex-shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+        <span class="text-sm text-slate-300 truncate">${item.name}</span>
+      </div>
+      <span class="text-sm font-semibold flex-shrink-0 ml-2 ${item.price === 0 ? 'text-green-400' : 'text-slate-200'}">${item.price === 0 ? 'FREE' : fmt(item.price)}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('cart-subtotal').textContent = fmt(subtotal);
+
+  const discRow = document.getElementById('cart-discount-row');
+  if (coupon.applied && discount > 0) {
+    discRow.style.display = 'flex';
+    document.getElementById('cart-discount').textContent = '−' + fmt(discount);
+  } else {
+    discRow.style.display = 'none';
+  }
+
+  document.getElementById('cart-total').textContent = fmt(total);
+
+  CATALOG.forEach(cat => {
+    const btn = document.getElementById('sel-all-' + cat.id);
+    if (!btn) return;
+    const allSel = cat.items.every(i => cart[i.id]);
+    btn.textContent = allSel ? 'Deselect all' : 'Select all';
+  });
+}
+
+// ════════════════════════════════════
+//  MOBILE BOTTOM BAR
+// ════════════════════════════════════
+function renderMobileBar() {
+  const sel = getSelected();
+  const bar = document.getElementById('mobile-bar');
+  document.getElementById('mobile-bar-total').textContent = fmt(getTotal());
+  document.getElementById('mobile-bar-count-badge').textContent = sel.length;
+  if (sel.length > 0) bar.classList.add('mobile-bar-enter');
+  else bar.classList.remove('mobile-bar-enter');
+}
+
+// ════════════════════════════════════
+//  COUPON
+// ════════════════════════════════════
+function applyCoupon() {
+  const input = document.getElementById('coupon-input');
+  const msg = document.getElementById('coupon-msg');
+  const code = input.value.trim().toUpperCase();
+  if (code === 'STARTER5') {
+    coupon.applied = true;
+    coupon.code = code;
+    input.classList.remove('border-red-500');
+    input.classList.add('border-green-500');
+    msg.textContent = '✓ STARTER5 applied — 5% discount activated!';
+    msg.className = 'text-xs mt-1.5 text-green-400 coupon-success';
+    msg.classList.remove('hidden');
+    renderSidebar();
+  } else if (code === '') {
+    msg.textContent = 'Please enter a code.';
+    msg.className = 'text-xs mt-1.5 text-slate-500';
+    msg.classList.remove('hidden');
+  } else {
+    coupon.applied = false;
+    input.classList.add('border-red-500');
+    msg.textContent = '✗ Invalid code. Hint: try STARTER5';
+    msg.className = 'text-xs mt-1.5 text-red-400';
+    msg.classList.remove('hidden');
+    renderSidebar();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('coupon-input').addEventListener('keydown', e => { if (e.key === 'Enter') applyCoupon(); });
+});
+
+// ════════════════════════════════════
+//  CHECKOUT MODAL
+// ════════════════════════════════════
+function openCheckout() {
+  const sel = getSelected();
+  if (sel.length === 0) return;
+  document.getElementById('checkout-summary').innerHTML = sel.map(item => `
+    <div class="flex justify-between text-sm">
+      <span class="text-slate-400">${item.name} <span class="text-slate-600 text-xs">${item.de}</span></span>
+      <span class="${item.price === 0 ? 'text-green-400' : 'text-slate-200'} font-semibold">${item.price === 0 ? 'FREE' : fmt(item.price)}</span>
+    </div>
+  `).join('') + (coupon.applied ? `<div class="flex justify-between text-sm text-green-400 border-t border-slate-700/40 pt-2 mt-1"><span>STARTER5 (−5 %)</span><span>−${fmt(getDiscount())}</span></div>` : '');
+  document.getElementById('checkout-total-display').textContent = fmt(getTotal());
+  showModal('checkout-modal');
+  lucide.createIcons();
+}
+
+function submitOrder(e) {
+  e.preventDefault();
+  const name    = document.getElementById('form-name').value.trim();
+  const email   = document.getElementById('form-email').value.trim();
+  const type    = document.getElementById('form-type').value;
+  const arrival = document.getElementById('form-arrival').value;
+  const address = document.getElementById('form-address').value.trim();
+
+  const order = {
+    id:        'US-' + String(Math.floor(1000 + Math.random() * 9000)),
+    name, email, type, arrival, address,
+    items:     getSelected().map(i => ({ id: i.id, name: i.name, de: i.de, price: i.price })),
+    subtotal:  getSubtotal(),
+    discount:  getDiscount(),
+    total:     getTotal(),
+    coupon:    coupon.applied ? coupon.code : null,
+    timestamp: new Date().toISOString(),
+  };
+
+  orders.unshift(order);
+  localStorage.setItem('us_orders_v3', JSON.stringify(orders));
+
+  addToFeed({
+    initials: name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase(),
+    name:     name.split(' ')[0] + (name.split(' ')[1] ? ' ' + name.split(' ')[1][0] + '.' : ''),
+    type,
+    origin:   type,
+    desc:     order.items.slice(0, 2).map(i => i.name).join(' & ') + (order.items.length > 2 ? ` + ${order.items.length - 2} more` : ''),
+    ago:      'Just now',
+    color:    '#6366f1',
+    isNew:    true,
+  });
+
+  closeModal('checkout-modal');
+  document.getElementById('success-order-id').textContent = order.id;
+  document.getElementById('success-name').textContent = order.name;
+  document.getElementById('success-total').textContent = fmt(order.total);
+  document.getElementById('success-items').innerHTML = order.items.map(i =>
+    `<div class="flex justify-between"><span>• ${i.name}</span><span>${i.price === 0 ? 'FREE' : fmt(i.price)}</span></div>`
+  ).join('');
+  showModal('success-modal');
+  lucide.createIcons();
+}
+
+// ════════════════════════════════════
+//  MODAL HELPERS
+// ════════════════════════════════════
+function showModal(id) {
+  const el = document.getElementById(id);
+  el.classList.remove('hidden');
+  el.classList.add('flex');
+}
+function closeModal(id) {
+  const el = document.getElementById(id);
+  el.classList.add('hidden');
+  el.classList.remove('flex');
+}
+function handleModalClick(e, id) {
+  if (e.target === document.getElementById(id)) closeModal(id);
+}
+
+// ════════════════════════════════════
+//  LIVE ORDER FEED
+// ════════════════════════════════════
+function addToFeed(data) {
+  const feed = document.getElementById('order-feed');
+  const el = document.createElement('div');
+  el.className = 'feed-in bg-slate-800 border border-slate-700/60 rounded-2xl p-4 flex items-start gap-4' + (data.isNew ? ' border-indigo-500/40' : '');
+  el.innerHTML = `
+    <div class="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center font-bold text-sm text-white" style="background:${data.color}20;border:1.5px solid ${data.color}50;color:${data.color}">
+      ${data.initials}
+    </div>
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center gap-2 flex-wrap mb-0.5">
+        <span class="font-semibold text-sm text-slate-200">${data.name}</span>
+        <span class="text-xs text-slate-500 bg-slate-700/50 px-2 py-0.5 rounded-full">${data.type}</span>
+        ${data.isNew ? '<span class="text-xs text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-full font-semibold">NEW</span>' : ''}
+      </div>
+      <p class="text-sm text-slate-400 truncate">ordered: <strong class="text-slate-300">${data.desc}</strong></p>
+    </div>
+    <div class="text-xs text-slate-600 flex-shrink-0 flex items-center gap-1 mt-0.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      ${data.ago}
+    </div>`;
+  feed.insertBefore(el, feed.firstChild);
+}
+
+function renderFeed() {
+  DEMO_FEED.forEach(d => addToFeed(d));
+  orders.slice(0, 5).forEach(o => {
+    const name = o.name.split(' ')[0] + (o.name.split(' ')[1] ? ' ' + o.name.split(' ')[1][0] + '.' : '');
+    addToFeed({
+      initials: o.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase(),
+      name,
+      type: o.type,
+      origin: o.type,
+      desc: o.items.slice(0, 2).map(i => i.name).join(' & ') + (o.items.length > 2 ? ` + ${o.items.length - 2} more` : ''),
+      ago: 'Session',
+      color: '#6366f1',
+      isNew: true,
+    });
+  });
+}
+
+// ════════════════════════════════════
+//  RENDER CATALOG
+// ════════════════════════════════════
+function renderCatalog() {
+  const container = document.getElementById('catalog-container');
+  container.innerHTML = CATALOG.map(cat => `
+    <div class="cat-card bg-slate-800 rounded-2xl overflow-hidden">
+      <div class="px-5 py-4 flex items-center justify-between" style="background:linear-gradient(135deg,rgba(${cat.colorRgb},.1),rgba(${cat.colorRgb},.04))">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(${cat.colorRgb},.2)">
+            <i data-lucide="${cat.icon}" class="w-5 h-5" style="color:${cat.color}"></i>
+          </div>
+          <div>
+            <div class="font-bold text-slate-100">${cat.category}</div>
+            <div class="text-xs text-slate-500">${cat.sub} · ${cat.items.length} items</div>
+          </div>
+        </div>
+        <button id="sel-all-${cat.id}" onclick="toggleCategory('${cat.id}')" class="text-xs font-semibold px-3 py-1.5 rounded-lg border transition-colors" style="border-color:rgba(${cat.colorRgb},.3);color:${cat.color};background:rgba(${cat.colorRgb},.08)">
+          Select all
+        </button>
+      </div>
+      <div class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+        ${cat.items.map(item => `
+          <div id="item-${item.id}" class="item-card rounded-xl p-4 relative" onclick="toggleItem('${item.id}')">
+            <div class="item-chk absolute top-3 right-3 w-5 h-5 rounded-full flex items-center justify-center transition-all" style="opacity:0;transform:scale(.6);background:rgba(${cat.colorRgb},.2);border:1.5px solid ${cat.color}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="${cat.color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(${cat.colorRgb},.15)">
+                <i data-lucide="${item.icon}" class="w-4.5 h-4.5" style="color:${cat.color};width:18px;height:18px;"></i>
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="font-semibold text-sm text-slate-200 leading-tight">${item.name}</div>
+                <div class="text-xs text-slate-500 mt-0.5 leading-tight">${item.de}</div>
+                <div class="mt-2">
+                  ${item.free
+                    ? '<span class="inline-flex items-center gap-1 text-xs font-bold text-green-400 bg-green-400/10 border border-green-400/20 px-2 py-0.5 rounded-full">FREE ✓</span>'
+                    : `<span class="text-sm font-black" style="color:${cat.color}">${item.price.toFixed(2)} €</span>`
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ════════════════════════════════════
+//  INIT
+// ════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  renderCatalog();
+  renderFeed();
+  renderSidebar();
+  renderMobileBar();
+
+  document.getElementById('form-email').value = 'boris.liu@siemens.com';
+  const nextMonth = new Date(); nextMonth.setMonth(nextMonth.getMonth() + 1);
+  document.getElementById('form-arrival').value = nextMonth.toISOString().split('T')[0];
+
+  lucide.createIcons();
+});
+</script>
+</body>
+</html>
