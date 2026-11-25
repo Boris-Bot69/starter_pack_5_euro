@@ -37,6 +37,7 @@
   .coupon-success{animation:slideDown .3s ease;}
   @keyframes slideDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
 </style>
+<script src="supabase-config.js"></script>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen">
 
@@ -434,7 +435,8 @@ const DEMO_FEED = [
 // ════════════════════════════════════
 let cart    = {};
 let coupon  = { applied: false, code: '', pct: 5 };
-let orders  = JSON.parse(localStorage.getItem('us_orders_v3') || '[]');
+// Orders are stored privately in Supabase after payment confirmation.
+let orders  = [];
 
 // ════════════════════════════════════
 //  CART HELPERS
@@ -652,6 +654,20 @@ function submitOrder(e) {
 // ════════════════════════════════════
 //  MODAL HELPERS
 // ════════════════════════════════════
+async function submitOrder(e) {
+  e.preventDefault();
+  const config = window.UNISTARTER_SUPABASE;
+  if (!config?.anonKey) { alert('Die Zahlungsfunktion ist noch nicht konfiguriert.'); return; }
+  const button = e.target.querySelector('button[type="submit"]'); button.disabled = true;
+  try {
+    const customer = { name: document.getElementById('form-name').value.trim(), email: document.getElementById('form-email').value.trim(), type: document.getElementById('form-type').value, arrival: document.getElementById('form-arrival').value, address: document.getElementById('form-address').value.trim() };
+    const response = await fetch(config.checkoutFunctionUrl, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: config.anonKey, Authorization: `Bearer ${config.anonKey}` }, body: JSON.stringify({ customer, itemIds: getSelected().map(item => item.id), discountCode: coupon.applied ? coupon.code : null }) });
+    const result = await response.json();
+    if (!response.ok || !result.url) throw new Error(result.error || 'Checkout konnte nicht gestartet werden.');
+    window.location.href = result.url;
+  } catch (error) { alert(error.message || 'Zahlung konnte nicht gestartet werden.'); button.disabled = false; }
+}
+
 function showModal(id) {
   const el = document.getElementById(id);
   el.classList.remove('hidden');
