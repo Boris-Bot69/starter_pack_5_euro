@@ -7,35 +7,53 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
+  :root{--paper:#f8f3e8;--surface:#fffaf0;--ink:#17201a;--muted:#667065;--line:#ded4c2;--brand:#1f6f4a;--brand-dark:#155137;--accent:#d96d3c;--gold:#b78a38;}
   *{font-family:'Inter',sans-serif;}
-  .gradient-text{background:linear-gradient(135deg,#6366f1,#8b5cf6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-  .gradient-btn{background:linear-gradient(135deg,#6366f1,#8b5cf6);transition:all .2s ease;}
-  .gradient-btn:hover{background:linear-gradient(135deg,#4f46e5,#7c3aed);transform:translateY(-1px);box-shadow:0 8px 25px rgba(99,102,241,.4);}
+  body{background:var(--paper)!important;color:var(--ink)!important;}
+  h1,h2{font-family:'Playfair Display',serif;letter-spacing:-.02em;}
+  .gradient-text{background:none;-webkit-text-fill-color:currentColor;color:var(--brand);}
+  .gradient-btn{background:var(--brand);transition:all .2s ease;box-shadow:0 10px 24px rgba(31,111,74,.18);}
+  .gradient-btn:hover{background:var(--brand-dark);transform:translateY(-1px);box-shadow:0 14px 28px rgba(31,111,74,.24);}
   .gradient-btn:disabled{opacity:.45;transform:none;box-shadow:none;cursor:not-allowed;}
-  .hero-glow{background:radial-gradient(ellipse at 50% -10%,rgba(99,102,241,.22) 0%,transparent 65%);}
-  .item-card{transition:all .2s ease;cursor:pointer;border:1.5px solid rgba(100,116,139,.25);}
-  .item-card:hover{border-color:rgba(99,102,241,.55);background:rgba(99,102,241,.06);}
-  .item-card.selected{border-color:rgba(99,102,241,.85);background:rgba(99,102,241,.12);box-shadow:0 0 18px rgba(99,102,241,.18);}
+  .hero-glow{background:linear-gradient(135deg,#f8f3e8 0%,#fffaf0 50%,#ecf3e8 100%);}
+  .hero-photo{min-height:520px;background-image:linear-gradient(180deg,rgba(23,32,26,.05),rgba(23,32,26,.35)),url('https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=1200&q=85');background-size:cover;background-position:center;border-radius:28px;box-shadow:0 28px 70px rgba(42,35,24,.20);}
+  .hero-tile{background:rgba(255,250,240,.9);border:1px solid rgba(222,212,194,.85);box-shadow:0 18px 38px rgba(42,35,24,.14);}
+  .item-card{transition:all .2s ease;cursor:pointer;border:1px solid var(--line);background:#fffdf8;}
+  .item-card:hover{border-color:rgba(31,111,74,.45);background:#f7fbf4;transform:translateY(-1px);}
+  .item-card.selected{border-color:var(--brand);background:#eef7ed;box-shadow:inset 0 0 0 1px rgba(31,111,74,.24);}
   .receipt{position:sticky;top:84px;max-height:calc(100vh - 96px);overflow-y:auto;}
-  .modal-bg{backdrop-filter:blur(10px);background:rgba(2,6,23,.88);}
-  input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px rgba(99,102,241,.55);}
+  .modal-bg{backdrop-filter:blur(10px);background:rgba(23,32,26,.62);}
+  input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px rgba(31,111,74,.35);}
   .feed-in{animation:feedSlide .45s ease;}
   @keyframes feedSlide{from{opacity:0;transform:translateY(-12px);}to{opacity:1;transform:translateY(0);}}
   .bounce-in{animation:bounceIn .5s cubic-bezier(.68,-.55,.265,1.55);}
   @keyframes bounceIn{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
   .check-ring{stroke-dasharray:120;stroke-dashoffset:120;animation:drawCheck .6s .3s ease forwards;}
   @keyframes drawCheck{to{stroke-dashoffset:0;}}
-  ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:#0f172a;}::-webkit-scrollbar-thumb{background:#4338ca;border-radius:3px;}
+  ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:#efe6d5;}::-webkit-scrollbar-thumb{background:#b7a98f;border-radius:3px;}
   .mobile-bar-enter{transform:translateY(0)!important;}
   #mobile-bar{transform:translateY(100%);transition:transform .3s ease;}
   .nav-link{position:relative;}
-  .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:linear-gradient(90deg,#6366f1,#8b5cf6);transition:width .2s;}
+  .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:var(--accent);transition:width .2s;}
   .nav-link:hover::after{width:100%;}
-  .cat-card{border:1px solid rgba(100,116,139,.2);}
+  .cat-card{border:1px solid var(--line);background:#fffaf0!important;box-shadow:0 16px 40px rgba(42,35,24,.07);}
   .coupon-success{animation:slideDown .3s ease;}
   @keyframes slideDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+  .bg-slate-900,.bg-slate-900\/85,.bg-slate-900\/95,.bg-slate-800{background-color:rgba(255,250,240,.94)!important;}
+  .bg-slate-700,.bg-slate-700\/50{background-color:#f0e7d7!important;}
+  .bg-slate-800\/25{background-color:#efe7d8!important;}
+  .border-slate-800,.border-slate-800\/60,.border-slate-800\/80,.border-slate-700,.border-slate-700\/60,.border-slate-700\/80,.border-slate-600{border-color:var(--line)!important;}
+  .text-slate-100,.text-slate-200,.text-slate-300{color:var(--ink)!important;}
+  .text-slate-400,.text-slate-500,.text-slate-600,.text-slate-700{color:var(--muted)!important;}
+  .text-indigo-400,.text-violet-400{color:var(--brand)!important;}
+  .bg-indigo-500\/10,.bg-green-500\/10{background-color:rgba(31,111,74,.08)!important;}
+  .border-indigo-500\/25,.border-green-500\/25{border-color:rgba(31,111,74,.22)!important;}
+  input,select,textarea{background:#fffdf8!important;border-color:var(--line)!important;color:var(--ink)!important;}
+  footer{background:#17201a;color:#f8f3e8;}
+  footer .gradient-text{color:#f8f3e8;}
+  footer .text-slate-600,footer .text-slate-700{color:#cfc6b5!important;}
 </style>
 <script src="supabase-config.js"></script>
 </head>
@@ -65,37 +83,50 @@
 </nav>
 
 <!-- ═══════════════════ HERO ═══════════════════ -->
-<section class="hero-glow min-h-screen flex items-center justify-center pt-24 pb-20 px-4 text-center">
-  <div class="max-w-4xl mx-auto">
-    <div class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/25 rounded-full px-4 py-1.5 text-sm text-indigo-400 mb-8">
-      <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-      FAU Erlangen-Nürnberg · TH Nürnberg · Auslandssemester
+<section class="hero-glow min-h-screen flex items-center pt-24 pb-16 px-4">
+  <div class="max-w-7xl mx-auto grid lg:grid-cols-[0.95fr_1.05fr] gap-10 lg:gap-14 items-center">
+    <div>
+      <div class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/25 rounded-full px-4 py-1.5 text-sm text-indigo-400 mb-8">
+        <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+        FAU Erlangen-Nürnberg · TH Nürnberg · Auslandssemester
+      </div>
+      <h1 class="text-5xl sm:text-6xl md:text-7xl font-black mb-6 leading-[1.02] tracking-tight">
+        Ein eingerichteter Start für dein Zimmer in Deutschland
+      </h1>
+      <p class="text-lg sm:text-xl text-slate-400 max-w-xl mb-3 leading-relaxed">
+        Stelle dir dein persönliches Starter-Pack für WG & Wohnheim zusammen -
+        <strong class="text-slate-200">maßgeschneidert, günstig, sofort lieferbereit.</strong>
+      </p>
+      <p class="text-sm text-slate-500 mb-10">Kein Supermarkt-Stress nach der Ankunft. Alles, was du brauchst, in einem Paket.</p>
+      <div class="flex flex-col sm:flex-row gap-4 mb-12">
+        <a href="#configurator" class="gradient-btn text-white font-bold px-8 py-4 rounded-xl flex items-center justify-center gap-2 text-base shadow-xl">
+          <i data-lucide="settings-2" class="w-5 h-5"></i>Jetzt Pack zusammenstellen
+        </a>
+        <a href="#how" class="border border-slate-700 hover:border-indigo-500/50 hover:bg-indigo-500/5 text-slate-300 font-semibold px-8 py-4 rounded-xl flex items-center justify-center gap-2 text-base transition-all">
+          <i data-lucide="play-circle" class="w-5 h-5 text-indigo-400"></i>Wie es funktioniert
+        </a>
+      </div>
+      <div class="grid grid-cols-3 gap-5 max-w-md">
+        <div><div class="text-3xl sm:text-4xl font-black gradient-text">16+</div><div class="text-xs text-slate-500 mt-1">Artikel wählbar</div></div>
+        <div><div class="text-3xl sm:text-4xl font-black gradient-text">5%</div><div class="text-xs text-slate-500 mt-1">Studi-Rabatt</div></div>
+        <div><div class="text-3xl sm:text-4xl font-black gradient-text">0 EUR</div><div class="text-xs text-slate-500 mt-1">Versandkosten</div></div>
+      </div>
     </div>
-    <h1 class="text-5xl sm:text-6xl md:text-7xl font-black mb-5 leading-[1.08] tracking-tight">
-      Dein <span class="gradient-text">stressfreier</span><br/>Start in Deutschland
-    </h1>
-    <p class="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-3 leading-relaxed">
-      Stelle dir dein persönliches Starter-Pack für WG & Wohnheim zusammen —
-      <strong class="text-slate-200">maßgeschneidert, günstig, sofort lieferbereit.</strong>
-    </p>
-    <p class="text-sm text-slate-500 mb-10">Kein Supermarkt-Stress nach der Ankunft. Alles, was du brauchst, in einem Paket.</p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-      <a href="#configurator" class="gradient-btn text-white font-bold px-8 py-4 rounded-2xl flex items-center justify-center gap-2 text-base shadow-xl">
-        <i data-lucide="settings-2" class="w-5 h-5"></i>Jetzt Pack zusammenstellen
-      </a>
-      <a href="#how" class="border border-slate-700 hover:border-indigo-500/50 hover:bg-indigo-500/5 text-slate-300 font-semibold px-8 py-4 rounded-2xl flex items-center justify-center gap-2 text-base transition-all">
-        <i data-lucide="play-circle" class="w-5 h-5 text-indigo-400"></i>Wie es funktioniert
-      </a>
-    </div>
-    <div class="grid grid-cols-3 sm:grid-cols-3 gap-6 max-w-sm mx-auto text-center">
-      <div><div class="text-3xl sm:text-4xl font-black gradient-text">16+</div><div class="text-xs text-slate-500 mt-1">Artikel wählbar</div></div>
-      <div><div class="text-3xl sm:text-4xl font-black gradient-text">5%</div><div class="text-xs text-slate-500 mt-1">Studi-Rabatt</div></div>
-      <div><div class="text-3xl sm:text-4xl font-black gradient-text">0€</div><div class="text-xs text-slate-500 mt-1">Versandkosten</div></div>
+    <div class="relative">
+      <div class="hero-photo"></div>
+      <div class="hero-tile absolute left-4 right-4 bottom-4 sm:left-8 sm:right-auto sm:w-72 rounded-2xl p-4">
+        <div class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-2">Beliebtes Paket</div>
+        <div class="font-bold text-slate-200">Bett, Küche & Bad bereit ab Tag 1</div>
+        <div class="mt-3 flex items-center justify-between text-sm">
+          <span class="text-slate-500">ab 39,95 EUR</span>
+          <span class="font-bold text-indigo-400">konfigurierbar</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ HOW IT WORKS ═══════════════════ -->
+<!-- HOW IT WORKS ═══════════════════ -->
 <section id="how" class="py-24 px-4 bg-slate-800/25 border-y border-slate-800/60">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-14">
@@ -341,8 +372,8 @@
   <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-md shadow-2xl text-center p-8 bounce-in" onclick="event.stopPropagation()">
     <div class="w-20 h-20 mx-auto mb-5 relative">
       <svg viewBox="0 0 80 80" class="w-20 h-20">
-        <circle cx="40" cy="40" r="36" fill="rgba(99,102,241,0.15)" stroke="rgba(99,102,241,0.4)" stroke-width="2"/>
-        <path d="M24 40 l12 12 l20-24" fill="none" stroke="#6366f1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="check-ring"/>
+        <circle cx="40" cy="40" r="36" fill="rgba(31,111,74,0.15)" stroke="rgba(31,111,74,0.4)" stroke-width="2"/>
+        <path d="M24 40 l12 12 l20-24" fill="none" stroke="#1f6f4a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="check-ring"/>
       </svg>
     </div>
     <h3 class="text-2xl font-black mb-2">Bestellung erfolgreich!</h3>
@@ -376,7 +407,7 @@
 const CATALOG = [
   {
     id: 'bedding', category: 'Bedding & Comfort', de: 'Schlafen & Komfort',
-    icon: 'bed', color: '#6366f1', colorRgb: '99,102,241',
+    icon: 'bed', color: '#1f6f4a', colorRgb: '31,111,74',
     items: [
       { id: 'sheets',  name: 'Bettwäsche-Set',  en: 'Bed sheets (single)', price: 8.00, icon: 'layers'   },
       { id: 'pillow',  name: 'Kopfkissen',       en: 'Pillow',              price: 4.50, icon: 'moon'     },
@@ -386,7 +417,7 @@ const CATALOG = [
   },
   {
     id: 'kitchen', category: 'Kitchen Starter Set', de: 'Küche & Kochen',
-    icon: 'utensils', color: '#f59e0b', colorRgb: '245,158,11',
+    icon: 'utensils', color: '#b78a38', colorRgb: '183,138,56',
     items: [
       { id: 'plate',   name: 'Teller & Schüssel', en: 'Plate & deep bowl',     price: 3.50, icon: 'circle'       },
       { id: 'cutlery', name: 'Besteck-Set',        en: 'Fork, knife & spoon',  price: 2.50, icon: 'utensils'     },
@@ -397,7 +428,7 @@ const CATALOG = [
   },
   {
     id: 'hygiene', category: 'Hygiene & Essentials', de: 'Bad & Sauberkeit',
-    icon: 'sparkles', color: '#10b981', colorRgb: '16,185,129',
+    icon: 'sparkles', color: '#5f8f65', colorRgb: '95,143,101',
     items: [
       { id: 'hygiene_kit', name: 'Hygiene-Set',       en: 'Toothbrush, paste, soap & toilet paper', price: 4.00, icon: 'smile'    },
       { id: 'laundry',     name: 'Waschmittel',       en: 'Laundry detergent (500 ml)',              price: 2.50, icon: 'wind'     },
@@ -406,7 +437,7 @@ const CATALOG = [
   },
   {
     id: 'electronics', category: 'Electronics & Helpers', de: 'Technik & Alltagshelfer',
-    icon: 'zap', color: '#8b5cf6', colorRgb: '139,92,246',
+    icon: 'zap', color: '#d96d3c', colorRgb: '217,109,60',
     items: [
       { id: 'adapter',  name: 'EU-Steckdosenadapter',   en: 'Universal EU power adapter (essential!)', price: 4.00, icon: 'plug'         },
       { id: 'bag',      name: 'Einkaufstasche',          en: 'Reusable shopping bag',                   price: 1.00, icon: 'shopping-bag' },
@@ -423,11 +454,11 @@ const ALL_ITEMS = CATALOG.flatMap(c => c.items);
 //  DEMO FEED DATA
 // ════════════════════════════════════
 const DEMO_FEED = [
-  { initials: 'SM', name: 'Sarah M.', type: 'Erasmus', origin: '🇪🇸 Spanien',   desc: 'Bettwäsche-Set & EU-Steckdosenadapter',               ago: 'Vor 12 Minuten',  color: '#6366f1' },
-  { initials: 'AK', name: 'Arjun K.', type: 'Master',  origin: '🇮🇳 Indien',    desc: 'Bettdecke + Kochtopf + Hygiene-Set + Adapter',         ago: 'Vor 1 Stunde',    color: '#8b5cf6' },
-  { initials: 'YT', name: 'Yuki T.',  type: 'Exchange',origin: '🇯🇵 Japan',     desc: 'Kitchen Starter Set (5 Artikel) & Nahverkehr-Guide',   ago: 'Vor 2 Stunden',   color: '#10b981' },
-  { initials: 'LF', name: 'Lucas F.', type: 'PhD',     origin: '🇧🇷 Brasilien', desc: 'Full Pack: Bettwäsche + Küche + Hygiene + Adapter',    ago: 'Vor 4 Stunden',   color: '#f59e0b' },
-  { initials: 'PR', name: 'Priya R.', type: 'Bachelor',origin: '🇮🇳 Indien',    desc: 'Bettdecke, Besteck-Set & Lokale Gutscheine',           ago: 'Vor 6 Stunden',   color: '#06b6d4' },
+  { initials: 'SM', name: 'Sarah M.', type: 'Erasmus', origin: '🇪🇸 Spanien',   desc: 'Bettwäsche-Set & EU-Steckdosenadapter',               ago: 'Vor 12 Minuten',  color: '#1f6f4a' },
+  { initials: 'AK', name: 'Arjun K.', type: 'Master',  origin: '🇮🇳 Indien',    desc: 'Bettdecke + Kochtopf + Hygiene-Set + Adapter',         ago: 'Vor 1 Stunde',    color: '#d96d3c' },
+  { initials: 'YT', name: 'Yuki T.',  type: 'Exchange',origin: '🇯🇵 Japan',     desc: 'Kitchen Starter Set (5 Artikel) & Nahverkehr-Guide',   ago: 'Vor 2 Stunden',   color: '#5f8f65' },
+  { initials: 'LF', name: 'Lucas F.', type: 'PhD',     origin: '🇧🇷 Brasilien', desc: 'Full Pack: Bettwäsche + Küche + Hygiene + Adapter',    ago: 'Vor 4 Stunden',   color: '#b78a38' },
+  { initials: 'PR', name: 'Priya R.', type: 'Bachelor',origin: '🇮🇳 Indien',    desc: 'Bettdecke, Besteck-Set & Lokale Gutscheine',           ago: 'Vor 6 Stunden',   color: '#3f7f91' },
 ];
 
 // ════════════════════════════════════
@@ -636,7 +667,7 @@ function submitOrder(e) {
     origin:   type,
     desc:     order.items.slice(0, 2).map(i => i.name).join(' & ') + (order.items.length > 2 ? ` + ${order.items.length - 2} weitere` : ''),
     ago:      'Gerade eben',
-    color:    '#6366f1',
+    color:    '#1f6f4a',
     isNew:    true,
   });
 
@@ -720,7 +751,7 @@ function renderFeed() {
       origin: o.type,
       desc: o.items.slice(0, 2).map(i => i.name).join(' & ') + (o.items.length > 2 ? ` + ${o.items.length - 2} weitere` : ''),
       ago: 'Session',
-      color: '#6366f1',
+      color: '#1f6f4a',
       isNew: true,
     });
   });
@@ -794,3 +825,5 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
+
